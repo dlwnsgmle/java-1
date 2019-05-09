@@ -17,11 +17,13 @@ public class GalagaGame extends JPanel implements KeyListener {
 
 	private ArrayList sprites = new ArrayList();
 	private Sprite starship;
-
+	
+    private int shot = 10;
+    private int rerode = 9; 
 	private BufferedImage alienImage;//몬스터
 	private BufferedImage shotImage;//탄환
 	private BufferedImage shipImage;//플레이어
-       private BufferedImage MBossImage;//중간 보스
+	private BufferedImage MBossImage;//중간 보스
 	
 	public GalagaGame() {
 		JFrame frame = new JFrame("Galaga Game");
@@ -36,7 +38,7 @@ public class GalagaGame extends JPanel implements KeyListener {
 			shotImage = ImageIO.read(new File("fire.png"));
 			shipImage = ImageIO.read(new File("starship.png"));
 			alienImage = ImageIO.read(new File("duddn.png"));
-	                MBossImage = ImageIO.read(new File("gustn.png"));
+			MBossImage = ImageIO.read(new File("gustn.png"));
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -50,13 +52,14 @@ public class GalagaGame extends JPanel implements KeyListener {
 	private void initSprites() {
 		starship = new StarShipSprite(this, shipImage, 370, 550);
 		sprites.add(starship);
-		for (int y = 0; y < 5; y++) {
-			for (int x = 0; x < 15; x++) {
-				Sprite alien = new AlienSprite(this, alienImage, 100 + (x * 50), (50) + y * 30);
+		for (int y = 0; y < 5; y++) {//몬스터 수
+			for (int x = 0; x < 12; x++) {
+				Sprite alien = new AlienSprite(this, alienImage, 100 + (x * 50), (50) + y * 30);//몬스터 딜레마
 				sprites.add(alien);
 				Sprite MBoss = new AlienSprite(this, MBossImage, 100 + (x * 1), (1) + y * 1);
 				sprites.add(MBoss);
-	
+
+
 			}
 		}
 	}
@@ -74,19 +77,18 @@ public class GalagaGame extends JPanel implements KeyListener {
 		sprites.remove(sprite);
 	}
 
-	public void fire() {
-		ShotSprite shot0 = new ShotSprite(this, shotImage, starship.getX() + 10, starship.getY() - 30);//탄환 위치
+ 	public void fire() {
+		ShotSprite shot0 = new ShotSprite(this, shotImage, starship.getX() + 10, starship.getY() - 30);//탄환 수
 		ShotSprite shot1 = new ShotSprite(this, shotImage, starship.getX() + 15, starship.getY() - 30);
-		ShotSprite shot2 = new ShotSprite(this, shotImage, starship.getX() + 0 , starship.getY() -30);
 		sprites.add(shot0);
 		sprites.add(shot1);
-		sprites.add(shot2);
 	}
-
+ 	
+ 	
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		g.setColor(Color.YELLOW);//화면색 바꾸기
+		g.setColor(Color.BLACK);//화면색 바꾸기
 		g.fillRect(0, 0, 800, 600);
 		for (int i = 0; i < sprites.size(); i++) {
 			Sprite sprite = (Sprite) sprites.get(i);
@@ -132,11 +134,21 @@ public class GalagaGame extends JPanel implements KeyListener {
 			starship.setDy(-5);
 		if (e.getKeyCode() == KeyEvent.VK_DOWN)
 			starship.setDy(+5);
-		if (e.getKeyCode() == KeyEvent.VK_A)//로켓 날리기
-			fire();
+		if (shot != 0) {
+			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+				shot--;
+				fire();
 		
 	}
+}
 
+		if (rerode != 0) {
+			if (e.getKeyCode() == KeyEvent.VK_R) {
+				shot = 20;
+				rerode--;
+				}
+			}
+		}
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_LEFT)
@@ -144,9 +156,9 @@ public class GalagaGame extends JPanel implements KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 			starship.setDx(0);
 		if (e.getKeyCode() == KeyEvent.VK_UP)
-			starship.setDx(0);
+			starship.setDy(0);
 		if (e.getKeyCode() == KeyEvent.VK_DOWN)
-			starship.setDx(0);
+			starship.setDy(0);
 	}
 
 	@Override
