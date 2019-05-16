@@ -2,7 +2,7 @@ import javax.swing.JButton;
 
 public class Text  {
 	
-	 class 더하기{
+	 class tex{
 		private int a;
 		private int b;
 
@@ -10,7 +10,7 @@ public class Text  {
 			this.a =a;
 			this.b =b;
 		}
-		 class 빼기{
+		 class qorl{
 			 private int a, num;
 				private int a11;
 				private int b;
@@ -19,10 +19,10 @@ public class Text  {
 					this.a =a;
 					this.num =num;
 					
-					class 나누기{
+					class sksnrl{
 						
 					}
-					class 곱하기 {
+					class rhqgkrl {
 						
 					}
 		
